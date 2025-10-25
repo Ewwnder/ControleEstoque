@@ -82,6 +82,11 @@ public class GerenciarProdutos extends javax.swing.JFrame {
 
         btnRemoverProdutos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnRemoverProdutos.setText("Remover Produto");
+        btnRemoverProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverProdutosActionPerformed(evt);
+            }
+        });
 
         btnListarProdutos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnListarProdutos.setText("Listar Produtos");
@@ -282,6 +287,28 @@ public class GerenciarProdutos extends javax.swing.JFrame {
     private void cmpQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmpQuantidadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmpQuantidadeActionPerformed
+
+    private void btnRemoverProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverProdutosActionPerformed
+        
+        ProdutoController produtoController = new ProdutoController();
+        
+        try{
+            int idProduto = Integer.parseInt(cmpIdBuscar.getText());
+            
+            int confirmacao = JOptionPane.showConfirmDialog(this, "Deseja mesmo remover o produto informado?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            
+            if (confirmacao!=JOptionPane.YES_OPTION){
+                return;
+            }
+            
+            produtoController.removerProduto(idProduto);
+            JOptionPane.showMessageDialog(this, "Produto removido com sucesso!");
+        } catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Informe um ID válido!");
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Erro ao remover o produto: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnRemoverProdutosActionPerformed
 
     private void limparCampos(){
         cmpIdBuscar.setText("");
