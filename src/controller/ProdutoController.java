@@ -16,15 +16,14 @@ public class ProdutoController {
         this.produtoService = new ProdutoService();
     }
     
-    public void adicionarProduto(String nome, int idCategoria, int quantidade, double preco){
-        Produto produto = new Produto(0, nome, idCategoria, quantidade, preco);
+    public void adicionarProduto(Produto produto){
         produtoService.adicionarProduto(produto);
         System.out.println("Produto adicionado com sucesso no sistema!");
     }
     
     public void listarProdutos(){
         List<Produto> produtos = produtoService.listarProdutos();
-        produtos.forEach(p -> System.out.println(p.getId() + " - " + p.getNome() + " | " + p.getQuantidade() + " unidades | R$ " + p.getPreco()));
+        produtos.forEach(p -> System.out.println(p.getId() + " - " + p.getNome() + " | " + p.getQuantidade() + " unidades | R$ " + p.getPreco() + " valor unitário"));
     }
     
     public void removerProduto(int id){
@@ -32,8 +31,7 @@ public class ProdutoController {
         System.out.println(removeu ? "Produto removido com sucesso!" : "Produto não encontrado!");
     }
     
-    public void editarProduto(int id, String nome, int idCategoria, int quantidade, double preco){
-        Produto produto = new Produto(id, nome, idCategoria, quantidade, preco);
+    public void editarProduto(Produto produto){
         boolean atualizou = produtoService.editarProduto(produto);
         System.out.println(atualizou ? "Produto atualizado com sucesso!" : "Produto não encontrado!");
     }

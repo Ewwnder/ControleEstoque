@@ -39,7 +39,6 @@ public class ProdutoDAO {
             
             while (rs.next()){
                 produtos.add(new Produto(
-                        rs.getInt("id"),
                         rs.getString("nome"),
                         rs.getInt("idCategoria"),
                         rs.getInt("quantidade"),
@@ -103,7 +102,6 @@ public class ProdutoDAO {
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()){
                     return new Produto(
-                        rs.getInt("id"),
                         rs.getString("nome"),
                         rs.getInt("idCategoria"),
                         rs.getInt("quantidade"),
@@ -132,7 +130,6 @@ public class ProdutoDAO {
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()){
                     return new Produto(
-                        rs.getInt("id"),
                         rs.getString("nome"),
                         rs.getInt("idCategoria"),
                         rs.getInt("quantidade"),
