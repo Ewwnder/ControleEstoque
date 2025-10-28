@@ -11,8 +11,8 @@ Projeto em **Java (Swing + MySQL)** usando arquitetura **MVC + DAO + Service**.
 
 ## 🚀 Próximos passos
 
-- [ ] Criar classe de conexão MySQL  
-- [ ] Criar entidade `Produto`  
-- [ ] Implementar `ProdutoDAO` com CRUD  
-- [ ] Criar `ProdutoService`  
-- [ ] Adicionar tela Swing de cadastro de produtos  
+- [ ] Criar entidade 'Cliente' 
+- [ ] Implementar 'ClienteDAO' com CRUD 
+- [ ] Criar 'ProdutoService' 
+- [ ] Criar 'ProdutoController'
+- [ ] Adicionar tela Swing de Clientes
