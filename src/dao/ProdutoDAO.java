@@ -38,13 +38,14 @@ public class ProdutoDAO {
         try (Connection conn = ConexaoBD.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()){
             
             while (rs.next()){
-                produtos.add(new Produto(
-                        rs.getInt("id"),
-                        rs.getString("nome"),
-                        rs.getInt("idCategoria"),
-                        rs.getInt("quantidade"),
-                        rs.getDouble("preco")
-                ));
+                Produto produto = new Produto(
+                    rs.getString("nome"),
+                    rs.getInt("idCategoria"),
+                    rs.getInt("quantidade"),
+                    rs.getDouble("preco")
+                );
+                produto.setId(rs.getInt("id"));
+                produtos.add(produto);
             }
             
         } catch (SQLException e){
@@ -102,13 +103,14 @@ public class ProdutoDAO {
             
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()){
-                    return new Produto(
-                        rs.getInt("id"),
+                    Produto produto = new Produto(
                         rs.getString("nome"),
                         rs.getInt("idCategoria"),
                         rs.getInt("quantidade"),
                         rs.getDouble("preco")
                     );
+                    produto.setId(rs.getInt("id"));
+                    return produto;
                 }
             }
             
@@ -131,13 +133,14 @@ public class ProdutoDAO {
             
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()){
-                    return new Produto(
-                        rs.getInt("id"),
+                    Produto produto = new Produto(
                         rs.getString("nome"),
                         rs.getInt("idCategoria"),
                         rs.getInt("quantidade"),
                         rs.getDouble("preco")
                     );
+                    produto.setId(rs.getInt("id"));
+                    return produto;
                 }
             }
             
