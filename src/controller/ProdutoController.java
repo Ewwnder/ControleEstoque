@@ -36,21 +36,23 @@ public class ProdutoController {
         System.out.println(atualizou ? "Produto atualizado com sucesso!" : "Produto não encontrado!");
     }
     
-    public void buscarProdutoId(int id){
+    public Produto buscarProdutoId(int id){
         try{
             Produto produto = produtoService.buscarProdutoId(id);
-            System.out.println("Produto com o ID informado: " + produto.getNome());
+            return produto;
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
+            return null;
         }
     }
     
-    public void buscarProdutoNome(String nome){
+    public Produto buscarProdutoNome(String nome){
         try{
             Produto produto = produtoService.buscarProdutoNome(nome);
-            System.out.println("Produto com o nome informado: " + produto.getNome());
+            return produto;
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
+            return null;
         }
     }
 }

@@ -62,6 +62,11 @@ public class GerenciarProdutos extends javax.swing.JFrame {
         btnBuscarProdutos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnBuscarProdutos.setText("Buscar Produto");
         btnBuscarProdutos.setPreferredSize(new java.awt.Dimension(129, 23));
+        btnBuscarProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarProdutosActionPerformed(evt);
+            }
+        });
 
         btnLimparCampos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnLimparCampos.setText("Limpar Campos");
@@ -157,6 +162,19 @@ public class GerenciarProdutos extends javax.swing.JFrame {
                         .addGap(70, 70, 70))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 248, Short.MAX_VALUE)
+                                .addComponent(btnBuscarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNome)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(txtMostrarId, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtBuscarId, javax.swing.GroupLayout.Alignment.LEADING)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(727, 727, 727))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnLimparCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtQuantidade)
@@ -173,25 +191,11 @@ public class GerenciarProdutos extends javax.swing.JFrame {
                                     .addComponent(cmpNome, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cmpCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cmpIdBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmpIdLer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmpIdLer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 248, Short.MAX_VALUE)
-                                .addComponent(btnBuscarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNome)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(txtMostrarId, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtBuscarId, javax.swing.GroupLayout.Alignment.LEADING)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(727, 727, 727))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(245, 245, 245))
+                                .addGap(248, 248, 248)
+                                .addComponent(jLabel1)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,6 +313,50 @@ public class GerenciarProdutos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Erro ao remover o produto: " + e.getMessage());
         }
     }//GEN-LAST:event_btnRemoverProdutosActionPerformed
+
+    private void btnBuscarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProdutosActionPerformed
+        
+        ProdutoController produtoController = new ProdutoController();
+        
+        String idTxt = cmpIdBuscar.getText().trim();
+        String nome = cmpNome.getText();
+        
+        if (!idTxt.isEmpty() && !nome.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Preencha apenas o campo de ID ou nome!");
+            return;
+        }
+        
+        try{
+            
+            Produto produto = null;
+            
+            if (!idTxt.isEmpty()){
+                int id = Integer.parseInt(idTxt);
+                produto = produtoController.buscarProdutoId(id);
+            } 
+            else if (!nome.isEmpty()){
+                produto = produtoController.buscarProdutoNome(nome);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Preencha um campo para buscar determinado produto!");
+                return;
+            }
+            
+            if (produto!=null){
+                cmpIdLer.setText(String.valueOf(produto.getId()));
+                cmpNome.setText(produto.getNome());
+                cmpCategoria.setText(String.valueOf(produto.getIdCategoria()));
+                cmpQuantidade.setText(String.valueOf(produto.getQuantidade()));
+                cmpPreco.setText(String.valueOf(produto.getPreco()));
+            } else{
+                JOptionPane.showMessageDialog(this, "Produto não encontrado no sistema!");
+            }
+        } catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "ID inválido!");
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Erro ao buscar o produto: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnBuscarProdutosActionPerformed
 
     private void limparCampos(){
         cmpIdBuscar.setText("");
